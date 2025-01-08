@@ -66,6 +66,6 @@ if __name__ == "__main__":
     try:
         # 호스트는 '0.0.0.0'으로 설정하여 외부에서 접근할 수 있도록 하고,
         # 포트 번호는 Render에서 제공하는 'PORT' 환경 변수를 사용하며, 기본값은 5000
-        app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+        app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
     except Exception as e:
         print(f"서버 실행 중 오류 발생: {e}")
