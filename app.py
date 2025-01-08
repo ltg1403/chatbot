@@ -52,15 +52,15 @@ def chat():
         # 모델을 사용하여 사용자 메시지에 대한 응답 생성
         try:
             logging.debug("이 사이 오류인가1?")
-            inputs = tokenizer(user_message, return_tensors="pt", truncation=True, max_length=50, padding="max_length")
-            # inputs = tokenizer(user_message, return_tensors="pt", truncation=True, padding=True, max_length=50)
+            # inputs = tokenizer(user_message, return_tensors="pt", truncation=True, max_length=50, padding="max_length")
+            inputs = tokenizer(user_message, return_tensors="pt", truncation=True, padding=True, max_length=50)
             logging.debug("이 사이 오류인가2?")
-            attention_mask = inputs.get("attention_mask", None)  # 없을 경우 None
+            # attention_mask = inputs.get("attention_mask", None)  # 없을 경우 None
             
-            if attention_mask is None:
-                attention_mask = inputs["input_ids"].ne(tokenizer.pad_token_id).long()  # 직접 생성
+            # if attention_mask is None:
+                # attention_mask = inputs["input_ids"].ne(tokenizer.pad_token_id).long()  # 직접 생성
                 
-            # attention_mask = inputs["attention_mask"]
+            attention_mask = inputs["attention_mask"]
             
             logging.debug(f"입력값 attention_mask : {inputs['attention_mask']}")
             logging.debug(f"입력값 input_ids : {inputs['input_ids']}")
