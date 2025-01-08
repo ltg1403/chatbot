@@ -15,7 +15,7 @@ try:
     # 경량화된 모델로 설정
     # Render cloud 서버 에서 무료로 사용하려면 메모리 512MB 이하로 사용하여야되어 경량화 된 모델 정해야함
     # model_name = "sshleifer/tiny-gpt2"(한국어 지원 x)  , "skt/kogpt2-distilled" (유료) , "skt/kogpt2-small" (미공개 토큰)
-    model_name = "ggugul/ko-gpt2" 
+    model_name = "beomi/KcELECTRA-base" 
     
     # 토크나이저와 모델 로드
     if 'tokenizer' not in globals() or 'model' not in globals():
@@ -27,16 +27,16 @@ try:
     
     # 파이프라인 생성
     chatbot = pipeline("text-generation", model=model, tokenizer=tokenizer)
-    print("모델과 토크나이저가 성공적으로 로드되었습니다.")
+    logging.debug("모델과 토크나이저가 성공적으로 로드되었습니다.")
 except Exception as e:
-    print(f"모델 / 토크나이저 초기화 중 오류 발생: {e}")
+    logging.error(f"모델 / 토크나이저 초기화 중 오류 발생: {e}")
 
 @app.route("/")  # 홈페이지 라우팅
 def home():
     try:
         return render_template("index.html")  # index.html 템플릿을 렌더링하여 반환
     except Exception as e:
-        print(f"홈페이지 렌더링 중 오류 발생: {e}")
+        logging.error(f"홈페이지 렌더링 중 오류 발생: {e}")
         return "서버 오류: 홈페이지를 로드할 수 없습니다.", 500
 
 @app.route("/chat", methods=["POST"])  # POST 요청을 받는 '/chat' 라우팅
@@ -87,13 +87,13 @@ def chat():
             chatbot_reply = tokenizer.decode(outputs[0], skip_special_tokens=True)
             logging.debug(f"생성된 응답: {chatbot_reply}")
         except Exception as e:
-            print(f"모델 응답 생성 중 오류 발생: {e}")
+            logging.error(f"모델 응답 생성 중 오류 발생: {e}")
             chatbot_reply = "응답을 생성하지 못했습니다."
 
         # 생성된 응답을 JSON 형식으로 반환
         return jsonify({"response": chatbot_reply})
     except Exception as e:
-        print(f"채팅 처리 중 오류 발생: {e}")
+        logging.error(f"채팅 처리 중 오류 발생: {e}")
         return jsonify({"response": "서버 오류로 인해 요청을 처리할 수 없습니다."}), 500
 
 # app.py 소스 코드 가져오기
@@ -115,4 +115,4 @@ if __name__ == "__main__":
         # 포트 번호는 Render에서 제공하는 'PORT' 환경 변수를 사용하며, 기본값은 5000
         app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
     except Exception as e:
-        print(f"서버 실행 중 오류 발생: {e}")
+        logging.error(f"서버 실행 중 오류 발생: {e}")
