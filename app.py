@@ -37,6 +37,8 @@ def chat():
     try:
         # 클라이언트에서 보낸 메시지 추출 (JSON 형태로)
         user_message = request.json.get("message")
+        print(f"받은 메시지: {user_message}")
+        
         if not user_message:
             return jsonify({"response": "메시지를 입력해주세요!"})
         
@@ -50,9 +52,13 @@ def chat():
                 num_return_sequences=1, 
                 pad_token_id=tokenizer.pad_token_id, 
                 eos_token_id=tokenizer.eos_token_id,
-                attention_mask=attention_mask
+                attention_mask=attention_mask,
+                no_repeat_ngram_size=2,  # 반복 방지
+                top_p=0.9,  # top-p 샘플링
+                top_k=50  # top-k 샘플링
             )
             chatbot_reply = tokenizer.decode(outputs[0], skip_special_tokens=True)
+            print(f"생성된 응답: {chatbot_reply}")
         except Exception as e:
             print(f"모델 응답 생성 중 오류 발생: {e}")
             chatbot_reply = "응답을 생성하지 못했습니다."
