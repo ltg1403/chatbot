@@ -1,9 +1,11 @@
 import os
 
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 from transformers import pipeline
 
 app = Flask(__name__) # Flask 애플리케이션 생성
+CORS(app)  # 모든 도메인에서 오는 요청을 허용
 
 # 작은 모델을 사용하여 챗봇 초기화
 chatbot = pipeline("text-generation", model="distilgpt2")
