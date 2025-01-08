@@ -4,7 +4,7 @@ from transformers import pipeline
 app = Flask(__name__) # Flask 애플리케이션 생성
 
 # 작은 모델을 사용하여 챗봇 초기화
-chatbot = pipeline("text-generation", model="microsoft/DialoGPT-small")
+chatbot = pipeline("text-generation", model="distilgpt2")
 
 @app.route("/") # 홈페이지 라우팅
 def home():
