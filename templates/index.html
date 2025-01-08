@@ -3,43 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chatbot</title>
+    <title>창신 Inc - IPA 이태경</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #000000; /* 배경을 검정색으로 설정 */
+            color: #ffffff; /* 기본 글자색을 흰색으로 설정 */
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
+            box-sizing: border-box;
         }
+
+        /* Header 스타일 */
+        .header {
+            text-align: center;
+            background: linear-gradient(45deg, #007bff, #6a11cb);
+            color: white;
+            padding: 40px;
+            width: 100%;
+            font-size: 28px;
+            font-weight: bold;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .header span {
+            font-size: 22px;
+            font-weight: normal;
+            color: #f4f4f4;
+        }
+
         .chat-container {
-            width: 400px;
+            width: 100%;
+            max-width: 500px;
             background: white;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
         }
+
+        /* 메시지 창 높이 조정 */
         .chat-box {
-            height: 300px;
+            height: 500px; /* 메시지 창 높이 변경 */
             overflow-y: auto;
             margin-bottom: 10px;
             border: 1px solid #ddd;
             padding: 10px;
             border-radius: 8px;
             background-color: #f9f9f9;
+            color: #000000; /* 메시지 창 글자색을 검정색으로 설정 */
         }
+
         .input-container {
             display: flex;
+            width: 100%;
         }
+
         .input-container input {
             flex: 1;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            font-size: 14px;
         }
+
         .input-container button {
             padding: 10px;
             background-color: #007bff;
@@ -48,24 +82,83 @@
             border-radius: 4px;
             margin-left: 5px;
             cursor: pointer;
+            font-size: 14px;
         }
+
         .input-container button:hover {
             background-color: #0056b3;
+        }
+
+        /* Footer 스타일 */
+        .footer {
+            margin-top: 20px;
+            font-size: 22px; /* 텍스트 크기 증가 */
+            font-weight: bold;
+            color: #ffffff; /* 흰색 글자 */
+            text-align: center;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 600px) {
+            .header {
+                font-size: 20px;
+                padding: 30px; /* 모바일에서 여백 조정 */
+            }
+
+            .chat-container {
+                width: 90%;
+                padding: 15px;
+            }
+
+            .input-container input {
+                font-size: 12px;
+            }
+
+            .input-container button {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .footer {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .header {
+                font-size: 18px;
+            }
+
+            .footer {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- Header -->
+    <div class="header">
+        Python과 Flask를 활용한 AI Chatbot 구현
+    </div>
+	
     <div class="chat-container">
         <div class="chat-box" id="chat-box"></div>
         <div class="input-container">
-            <input type="text" id="user-input" placeholder="메시지를 입력하세요...">
+            <input type="text" id="user-input" placeholder="메시지를 입력하세요..." onkeydown="checkEnter(event)">
             <button onclick="sendMessage()">전송</button>
         </div>
     </div>
+	
+	<div class="footer">
+        Made by 이태경
+    </div>
+	
     <script>
         const chatBox = document.getElementById("chat-box");
         const userInput = document.getElementById("user-input");
 
+        // 메시지 전송 함수
         function sendMessage() {
             const message = userInput.value.trim();
             if (!message) return;
@@ -86,11 +179,19 @@
             userInput.value = "";
         }
 
+        // 메시지 추가 함수
         function addMessage(sender, message) {
             const messageElement = document.createElement("div");
             messageElement.textContent = `${sender}: ${message}`;
             chatBox.appendChild(messageElement);
             chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Enter 키 입력시 메시지 전송 함수 호출
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
         }
     </script>
 </body>
