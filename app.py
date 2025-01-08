@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.DEBUG)
 try:
     # 경량화된 모델로 설정
     # model_name = "sshleifer/tiny-gpt2"  
-    model_name = "EleutherAI/gpt-neo-125M"
+    model_name = "skt/kogpt2-distilled"
     
     # 토크나이저와 모델 로드
     if 'tokenizer' not in globals() or 'model' not in globals():
