@@ -1,4 +1,5 @@
 import os
+
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
@@ -54,6 +55,7 @@ def chat():
                 eos_token_id=tokenizer.eos_token_id,
                 attention_mask=attention_mask,
                 no_repeat_ngram_size=2,  # 반복 방지
+                do_sample=True,  # 샘플링을 사용
                 top_p=0.9,  # top-p 샘플링
                 top_k=50  # top-k 샘플링
             )
