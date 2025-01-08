@@ -11,8 +11,9 @@ try:
     model_name = "sshleifer/tiny-gpt2"  
     
     # 토크나이저와 모델 로드
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name)
+    if 'tokenizer' not in globals() or 'model' not in globals():
+        tokenizer = AutoTokenizer.from_pretrained("sshleifer/tiny-gpt2")
+        model = AutoModelForCausalLM.from_pretrained("sshleifer/tiny-gpt2")
     
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token  # pad_token을 eos_token으로 설정
