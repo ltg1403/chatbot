@@ -1,4 +1,5 @@
 import os
+import logging
 
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
@@ -7,9 +8,13 @@ from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 app = Flask(__name__)  # Flask 애플리케이션 생성
 CORS(app)  # 모든 도메인에서 오는 요청을 허용
 
+# 로그 설정
+logging.basicConfig(level=logging.DEBUG)
+
 try:
     # 경량화된 모델로 설정
-    model_name = "sshleifer/tiny-gpt2"  
+    # model_name = "sshleifer/tiny-gpt2"  
+    model_name = "EleutherAI/gpt-neo-125M"
     
     # 토크나이저와 모델 로드
     if 'tokenizer' not in globals() or 'model' not in globals():
@@ -38,7 +43,7 @@ def chat():
     try:
         # 클라이언트에서 보낸 메시지 추출 (JSON 형태로)
         user_message = request.json.get("message")
-        print(f"받은 메시지: {user_message}")
+        logging.debug(f"받은 메시지: {user_message}")
         
         if not user_message:
             return jsonify({"response": "메시지를 입력해주세요!"})
@@ -60,7 +65,7 @@ def chat():
                 top_k=50  # top-k 샘플링
             )
             chatbot_reply = tokenizer.decode(outputs[0], skip_special_tokens=True)
-            print(f"생성된 응답: {chatbot_reply}")
+            logging.debug(f"생성된 응답: {chatbot_reply}")
         except Exception as e:
             print(f"모델 응답 생성 중 오류 발생: {e}")
             chatbot_reply = "응답을 생성하지 못했습니다."
