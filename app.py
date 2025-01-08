@@ -76,6 +76,19 @@ def chat():
         print(f"채팅 처리 중 오류 발생: {e}")
         return jsonify({"response": "서버 오류로 인해 요청을 처리할 수 없습니다."}), 500
 
+# app.py 소스 코드 가져오기
+@app.route("/get-source", methods=["GET"])
+def get_source():
+    # 서버의 app.py 파일 경로
+    file_path = os.path.join(os.path.dirname(__file__), "app.py")
+    
+    try:
+        with open(file_path, "r") as file:
+            source_code = file.read()
+        return jsonify({"source_code": source_code})
+    except Exception as e:
+        return jsonify({"error": f"파일을 읽는 중 오류 발생: {str(e)}"}), 500
+
 if __name__ == "__main__":
     try:
         # 호스트는 '0.0.0.0'으로 설정하여 외부에서 접근할 수 있도록 하고,
