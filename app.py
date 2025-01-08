@@ -53,6 +53,10 @@ def chat():
         try:
             inputs = tokenizer(user_message, return_tensors="pt", truncation=True, max_length=50, padding="max_length")
             attention_mask = inputs["attention_mask"]
+            
+            logging.debug(f"입력값 attention_mask : {inputs['attention_mask']}")
+            logging.debug(f"입력값 input_ids : {inputs['input_ids']}")
+            
             outputs = model.generate(
                 inputs["input_ids"], 
                 max_length=100, 
@@ -65,6 +69,9 @@ def chat():
                 top_p=0.9,  # top-p 샘플링
                 top_k=50  # top-k 샘플링
             )
+
+            logging.debug(f"출력값: {outputs}")
+            
             chatbot_reply = tokenizer.decode(outputs[0], skip_special_tokens=True)
             logging.debug(f"생성된 응답: {chatbot_reply}")
         except Exception as e:
