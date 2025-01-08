@@ -14,8 +14,8 @@ logging.basicConfig(level=logging.DEBUG)
 try:
     # 경량화된 모델로 설정
     # Render cloud 서버 에서 무료로 사용하려면 메모리 512MB 이하로 사용하여야되어 경량화 된 모델 정해야함
-    # model_name = "sshleifer/tiny-gpt2"(한국어 지원 x)  , "skt/kogpt2-distilled" (유료) , "skt/kogpt2-small" (미공개 토큰)
-    model_name = "beomi/KcELECTRA-base" 
+    # model_name = "sshleifer/tiny-gpt2"(한국어 지원 x)  , "skt/kogpt2-distilled" (유료) , "skt/kogpt2-small" (미공개 토큰) , "beomi/KcELECTRA-base"  (느림)
+    model_name = "mymusise/koelectra-small"
     
     # 토크나이저와 모델 로드
     if 'tokenizer' not in globals() or 'model' not in globals():
