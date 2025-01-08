@@ -32,9 +32,13 @@ def chat():
     # max_length: 생성할 텍스트의 최대 길이, num_return_sequences: 생성할 텍스트 개수
     inputs = tokenizer(user_message, return_tensors="pt", truncation=True, max_length=50, padding="max_length")
     
+    # attention_mask를 설정
+    attention_mask = inputs["attention_mask"]
+
     # 모델로부터 응답 생성
     outputs = model.generate(inputs["input_ids"], max_length=100, num_return_sequences=1, 
-                             pad_token_id=tokenizer.pad_token_id, eos_token_id=tokenizer.eos_token_id)
+                             pad_token_id=tokenizer.pad_token_id, eos_token_id=tokenizer.eos_token_id,
+                             attention_mask=attention_mask)
 
     # 응답 디코딩
     chatbot_reply = tokenizer.decode(outputs[0], skip_special_tokens=True)
