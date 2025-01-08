@@ -13,8 +13,9 @@ logging.basicConfig(level=logging.DEBUG)
 
 try:
     # 경량화된 모델로 설정
-    # model_name = "sshleifer/tiny-gpt2"  
-    model_name = "skt/kogpt2-distilled"
+    # Render cloud 서버 에서 무료로 사용하려면 메모리 512MB 이하로 사용하여야되어 경량화 된 모델 정해야함
+    # model_name = "sshleifer/tiny-gpt2"(한국어 지원 x)  , "skt/kogpt2-distilled" (유료)
+    model_name = "skt/kogpt2-small"
     
     # 토크나이저와 모델 로드
     if 'tokenizer' not in globals() or 'model' not in globals():
