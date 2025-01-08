@@ -51,6 +51,7 @@ def chat():
         
         # 모델을 사용하여 사용자 메시지에 대한 응답 생성
         try:
+            logging.debug("이 사이 오류인가?")
             inputs = tokenizer(user_message, return_tensors="pt", truncation=True, max_length=50, padding="max_length")
             attention_mask = inputs["attention_mask"]
             
